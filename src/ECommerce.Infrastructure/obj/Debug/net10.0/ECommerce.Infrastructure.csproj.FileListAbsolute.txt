@@ -1,0 +1,17 @@
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Infrastructure.deps.json
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Infrastructure.dll
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Infrastructure.pdb
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Application.dll
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Domain.dll
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Domain.pdb
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/bin/Debug/net10.0/ECommerce.Application.pdb
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.csproj.AssemblyReference.cache
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.AssemblyInfoInputs.cache
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.AssemblyInfo.cs
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerc.B0B31267.Up2Date
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.dll
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/refint/ECommerce.Infrastructure.dll
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ECommerce.Infrastructure.pdb
+/Users/ositrade/Desktop/ECommerce/src/ECommerce.Infrastructure/obj/Debug/net10.0/ref/ECommerce.Infrastructure.dll
