@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "gLywXgOKq9U=",
+  "dgSpecHash": "JgYVauCKEdE=",
   "success": true,
   "projectFilePath": "/Users/ositrade/Desktop/ECommerce/src/ECommerce.Application/ECommerce.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/ositrade/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.11/microsoft.extensions.dependencyinjection.abstractions.10.0.11.nupkg.sha512"
+  ],
   "logs": []
 }
