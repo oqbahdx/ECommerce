@@ -1,4 +1,5 @@
 using ECommerce.Application.DTOs.auth;
+using ECommerce.Application.DTOs.Auth;
 using ECommerce.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
