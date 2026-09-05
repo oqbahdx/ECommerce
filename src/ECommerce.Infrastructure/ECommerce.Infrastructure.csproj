@@ -6,10 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Configurations\" />
     <Folder Include="Persistence\Migrations\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

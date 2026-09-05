@@ -1,4 +1,5 @@
 using ECommerce.Domain.Common;
+using ECommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Infrastructure.Persistence;
@@ -10,6 +11,7 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(
         ModelBuilder modelBuilder)

@@ -6,16 +6,14 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\Repositories\" />
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="Mappings\" />
-    <Folder Include="Services\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.11" />
   </ItemGroup>
 
   <PropertyGroup>

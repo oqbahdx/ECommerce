@@ -1,6 +1,14 @@
+using ECommerce.Domain.Entities;
+
 namespace ECommerce.Application.Interfaces.Repositories;
 
-public class IUserRepository
+public interface IUserRepository
 {
-    
+    Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task<bool> ExistByEmailAsync(string email, CancellationToken cancellationToken = default);
+    Task AddAsync(User user, CancellationToken cancellationToken = default);
+    void Update(User user);
+    void Delete(User user);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
