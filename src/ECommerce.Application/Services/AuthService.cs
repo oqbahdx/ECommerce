@@ -98,4 +98,28 @@ public class AuthService(
             Role = user.Role.ToString()
         };
     }
+
+    public async Task<RegisterResponse> GetMeAsync(
+        Guid userId,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await userRepository.GetByIdAsync(
+            userId,
+            cancellationToken);
+
+        if (user is null)
+        {
+            throw new NotFoundException(
+                "User not found.");
+        }
+
+        return new RegisterResponse
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            Role = user.Role.ToString()
+        };
+    }
 }

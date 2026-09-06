@@ -19,7 +19,7 @@ public class JwtService(
         var claims = new List<Claim>
         {
             new(
-                JwtRegisteredClaimNames.Sub,
+                ClaimTypes.NameIdentifier,
                 user.Id.ToString()),
 
             new(
