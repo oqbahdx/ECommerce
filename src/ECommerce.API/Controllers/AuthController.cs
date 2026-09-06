@@ -49,4 +49,29 @@ public class AuthController(IAuthService authService) : ControllerBase
             message = "You are an admin."
         });
     }
+    
+    [AllowAnonymous]
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshToken(
+        RefreshTokenRequest request,
+        CancellationToken cancellationToken)
+    {
+        var response = await authService.RefreshTokenAsync(
+            request,
+            cancellationToken);
+
+        return Ok(response);
+    }
+    [AllowAnonymous]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(
+        RefreshTokenRequest request,
+        CancellationToken cancellationToken)
+    {
+        await authService.LogoutAsync(
+            request.RefreshToken,
+            cancellationToken);
+
+        return NoContent();
+    }
 }

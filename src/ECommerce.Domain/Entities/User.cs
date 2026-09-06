@@ -17,4 +17,7 @@ public class User : BaseEntity
     public UserRole Role { get; set; } = UserRole.Customer;
 
     public bool IsActive { get; set; } = true;
+    
+    public ICollection<RefreshToken> RefreshTokens { get; set; }
+        = new List<RefreshToken>();
 }

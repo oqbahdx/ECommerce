@@ -5,19 +5,28 @@ using ECommerce.Application.Interfaces.Repositories;
 using ECommerce.Application.Interfaces.Services;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Enums;
+using FluentValidation;
+
 
 namespace ECommerce.Application.Services;
 
 public class AuthService(
     IUserRepository userRepository,
+    IRefreshTokenRepository refreshTokenRepository,
     IPasswordService passwordService,
-    IJwtService jwtService
+    IJwtService jwtService,
+    IRefreshTokenService refreshTokenService,
+    IValidator<RegisterRequest> registerValidator
 ) : IAuthService
 {
     public async Task<RegisterResponse> RegisterAsync(
         RegisterRequest request,
         CancellationToken cancellationToken = default)
     {
+        await registerValidator.ValidateAndThrowAsync(
+            request,
+            cancellationToken);
+
         var email = request.Email.Trim().ToLowerInvariant();
 
         var emailExists =
@@ -85,11 +94,21 @@ public class AuthService(
         }
 
         var accessToken = jwtService.GenerateAccessToken(user);
+        var refreshToken = refreshTokenService.GenerateToken();
+        var refreshTokenEntity = new RefreshToken
+        {
+            UserId = user.Id,
+            TokenHash = refreshTokenService.HashToken(refreshToken),
+            ExpiresAt = DateTimeOffset.UtcNow.AddDays(30)
+        };
+        await refreshTokenRepository.AddAsync(refreshTokenEntity, cancellationToken);
+        await refreshTokenRepository.SaveChangesAsync(cancellationToken);
         var expiresAt = jwtService.GetAccessTokenExpiration();
 
         return new LoginResponse
         {
             AccessToken = accessToken,
+            RefreshToken = refreshToken,
             ExpiresAt = expiresAt,
             UserId = user.Id,
             FirstName = user.FirstName,
@@ -121,5 +140,108 @@ public class AuthService(
             Email = user.Email,
             Role = user.Role.ToString()
         };
+    }
+
+    public async Task<RefreshTokenResponse> RefreshTokenAsync(
+        RefreshTokenRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var tokenHash = refreshTokenService.HashToken(
+            request.RefreshToken);
+
+        var refreshTokenEntity =
+            await refreshTokenRepository.GetByTokenHashAsync(
+                tokenHash,
+                cancellationToken);
+
+        if (refreshTokenEntity is null)
+        {
+            throw new BadRequestException(
+                "Invalid refresh token.");
+        }
+
+        if (refreshTokenEntity.IsRevoked)
+        {
+            throw new BadRequestException(
+                "Refresh token has been revoked.");
+        }
+
+        if (refreshTokenEntity.ExpiresAt <= DateTimeOffset.UtcNow)
+        {
+            throw new BadRequestException(
+                "Refresh token has expired.");
+        }
+
+        var user = refreshTokenEntity.User;
+
+        if (!user.IsActive)
+        {
+            throw new BadRequestException(
+                "Your account is inactive.");
+        }
+
+        // Revoke old refresh token
+        refreshTokenEntity.RevokedAt =
+            DateTimeOffset.UtcNow;
+
+        refreshTokenRepository.Update(refreshTokenEntity);
+
+        // Generate new tokens
+        var newAccessToken =
+            jwtService.GenerateAccessToken(user);
+
+        var newRefreshToken =
+            refreshTokenService.GenerateToken();
+
+        var newRefreshTokenEntity = new RefreshToken
+        {
+            UserId = user.Id,
+            TokenHash =
+                refreshTokenService.HashToken(newRefreshToken),
+            ExpiresAt =
+                DateTimeOffset.UtcNow.AddDays(30)
+        };
+
+        await refreshTokenRepository.AddAsync(
+            newRefreshTokenEntity,
+            cancellationToken);
+
+        await refreshTokenRepository.SaveChangesAsync(
+            cancellationToken);
+
+        return new RefreshTokenResponse
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken,
+            ExpiresAt = jwtService.GetAccessTokenExpiration()
+        };
+    }
+
+    public async Task LogoutAsync(
+        string refreshToken,
+        CancellationToken cancellationToken = default)
+    {
+        var tokenHash = refreshTokenService.HashToken(refreshToken);
+
+        var refreshTokenEntity =
+            await refreshTokenRepository.GetByTokenHashAsync(
+                tokenHash,
+                cancellationToken);
+
+        if (refreshTokenEntity is null)
+        {
+            return;
+        }
+
+        if (!refreshTokenEntity.IsRevoked)
+        {
+            refreshTokenEntity.RevokedAt =
+                DateTimeOffset.UtcNow;
+
+            refreshTokenRepository.Update(refreshTokenEntity);
+
+            await refreshTokenRepository.SaveChangesAsync(
+                cancellationToken);
+        }
     }
 }
