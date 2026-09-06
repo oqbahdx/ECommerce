@@ -17,4 +17,10 @@ public interface IAuthService
     Task<RegisterResponse> GetMeAsync(
         Guid userId,
         CancellationToken cancellationToken = default);
+    Task<RefreshTokenResponse> RefreshTokenAsync(
+        RefreshTokenRequest request,
+        CancellationToken cancellationToken = default);
+    Task LogoutAsync(
+        string refreshToken,
+        CancellationToken cancellationToken = default);
 }
