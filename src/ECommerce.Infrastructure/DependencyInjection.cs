@@ -1,6 +1,7 @@
 using ECommerce.Application.Common;
 using ECommerce.Application.Interfaces.Repositories;
 using ECommerce.Application.Interfaces.Services;
+using ECommerce.Application.Services;
 using ECommerce.Infrastructure.Persistence;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.Services;
@@ -39,6 +40,10 @@ public static class DependencyInjection
         // refresh tokens
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        
+        // products
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductService, ProductService>();
 
         return services;
     }
